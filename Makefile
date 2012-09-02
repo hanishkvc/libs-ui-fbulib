@@ -26,3 +26,7 @@ clean:
 	rm -i arm-* || /bin/true
 	rm -i x86-* || /bin/true
 
+font: 9x18.pcf
+	pcf2bdf 9x18.pcf > 9x18.bdf
+	./bdf2cfile.py 9x18.bdf > f9x18.h
+

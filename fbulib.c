@@ -21,9 +21,7 @@
 
 #include "f9x18.h"
 
-#ifdef PRG_SAMPLE
-#include "dprints.c"
-#endif
+#include "dprints.h"
 
 #define FBERROR(x) printf("ERROR:fbulib: in line %s:%d: %s\n", __FUNCTION__, __LINE__, strerror(errno));
 

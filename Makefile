@@ -18,7 +18,7 @@ all:
 
 normal: fbmsg
 
-fbmsg: fbulib.c dprints.c
+fbmsg: fbulib.c dprints.h
 	$(CC) $(CFLAGS) -o $(APPPREFIX)fbmsg -DDEBUG_INFO -DPRG_SAMPLE fbulib.c
 
 clean:

@@ -1,3 +1,5 @@
+#ifndef __DPRINTS__
+#define __DPRINTS__
 
 #ifdef DEBUG_PRG
 #define dprintf printf
@@ -16,4 +18,6 @@ int dummy_fprintf(FILE *f, char *fmt, ...)
 {
 	return 0;
 }
+
+#endif
 

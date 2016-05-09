@@ -1,6 +1,6 @@
 /*
  * fbulib.c - A library of useful fb functions
- * v03July2012_1527
+ * v20160509_1620
  * HKVC, GPL, Jan2000+
  *
  */
@@ -35,7 +35,7 @@
 
 int gFBLineLen = 1024;
 int gFBScreenHeight = 600;
-int gFBNumScreens = 1;
+int gFBNumScreens = -1;
 
 struct fb_var_screeninfo gFBVar;
 struct fb_fix_screeninfo gFBFix;
@@ -129,6 +129,23 @@ void draw_text_ext(int fFB, int x, int y, char *sText, unsigned long color, unsi
 	draw_text(fFB, x, y, sText, color);
 }
 
+void info_fb()
+{
+    if (gFBNumScreens == -1) {
+        printf("WARN:fbulib: Call open_fb before calling info_fb\n");
+        return;
+    }
+    printf("INFO:fbulib: res %d,%d virtual %d,%d, line_len %d\n",
+        gFBVar.xres, gFBVar.yres, gFBVar.xres_virtual, gFBVar.yres_virtual, gFBFix.line_length);
+    printf("INFO:fbulib: dim %d,%d\n", gFBVar.width, gFBVar.height);
+    printf("INFO:fbulib: bits_per_pixel %d\n", gFBVar.bits_per_pixel);
+
+    printf("INFO:fbulib: NumOfScreens = %d\n",gFBNumScreens);
+    if(gFBVar.bits_per_pixel != 32) {
+	printf("ERR:fbulib: bits_per_pixel not supported\n");
+    }
+}
+
 int open_fb()
 {
     int fd;
@@ -146,25 +163,16 @@ int open_fb()
     FBCTL(fd, FBIOGET_VSCREENINFO, &gFBVar);
     FBCTL(fd, FBIOGET_FSCREENINFO, &gFBFix);
 
-#ifdef DEBUG_INFO
-    printf("INFO:fbulib: res %d,%d virtual %d,%d, line_len %d\n",
-        gFBVar.xres, gFBVar.yres, gFBVar.xres_virtual, gFBVar.yres_virtual, gFBFix.line_length);
-    printf("INFO:fbulib: dim %d,%d\n", gFBVar.width, gFBVar.height);
-    printf("INFO:fbulib: bits_per_pixel %d\n", gFBVar.bits_per_pixel);
-#endif
-
     gFBLineLen = gFBFix.line_length;
     gFBScreenHeight = gFBVar.yres;
     gFBNumScreens = gFBVar.yres_virtual/gFBVar.yres;
 
 #ifdef DEBUG_INFO
-    printf("INFO:fbulib: NumOfScreens = %d\n",gFBNumScreens);
-    if(gFBVar.bits_per_pixel != 32) {
-	printf("ERR:fbulib: bits_per_pixel not supported\n");
-    }
+    info_fb();
 #endif
     return fd;
 }
+
 
 #define COLOR_TITLE 0xFF0000FF
 #define COLOR_ACTIVE 0xFFFF0000
@@ -172,7 +180,7 @@ int open_fb()
 #define BCOLOR_ACTIVE 0xFF808000
 #define BCOLOR_INACTIVE 0xFF000000
 
-#ifdef PRG_SAMPLE
+#ifdef PRG_TEST
 
 #define S_X 10
 #define S_Y 10

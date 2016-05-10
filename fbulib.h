@@ -7,6 +7,10 @@
  *
  */
 
+#include <linux/fb.h>
+
+extern struct fb_var_screeninfo gFBVar;
+extern struct fb_fix_screeninfo gFBFix;
 
 void sync_fb(int fFB);
 void draw_rect(int fFB, int x, int y, int xlen, int ylen, unsigned long color);

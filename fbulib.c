@@ -107,7 +107,7 @@ void draw_text(int fFB, int x, int y, char *sText, unsigned long color)
 	for(i = 0; i < sLen; i++) {
 		lFontBase = FK_FontBitmapsArray[(int)sText[i]];
 		if(lFontBase == NULL)
-			return;
+			lFontBase = FK_FontBitmapsArray[(int)'?'];
 		xC = x+i*FK_FontXLen+2;
 		for(j = 0; j < FK_FontYLen; j++) {
 			lFontLine = lFontBase[j];

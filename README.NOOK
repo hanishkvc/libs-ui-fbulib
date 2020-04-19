@@ -1,0 +1,70 @@
+MenuK for Nooktablet in particular and
+Linux and inturn Android devices in general
+v08Jan2012
+HKVC, GPL, Jan2012
+-----------------------------
+
+This displays the list of items/Strings passed in its
+command line on the framebuffer /dev/graphics/fb0 and 
+inturn allows the user to 
+a. scroll throught the same (using Vol+/- buttons) and 
+b. select a item (using n/home button)
+The list index of the selected item is returned else
+-1 is returned.
+
+Wrt NookTab
+----------------------
+1. /dev/input/event0 
+
+The press of n button on the device can be read from this
+
+2. /dev/input/event1
+
+The press of Vol+ and Vol- buttons can be read from this
+
+3. /dev/input/event2
+
+The touch events can be read from this.
+
+4. /dev/input/event3
+
+May be is the accelorometer, not sure, haven't debugged
+
+5. /dev/input/event4
+
+Not sure what ..., haven't debugged much
+
+NOTE1: 
+Key value 0 == Release
+Key value 1 == Pressed
+
+NOTE2:
+Key Code 102 == Home/N button
+Key code 114 == Vol Minus
+Key code 115 == Vol Plus
+
+
+Wrt Fonts
+---------------------
+
+A python program is provided to convert from bdf format into 
+a C Header file, which can be used from with in the program.
+
+pcf2bdf can be used to convert pcf files in X Server to bdf
+for use with the above program.
+
+As of now it requires a Font which is atleast 8 pixel wide.
+Also the font should not be more than 16 pixels wide.
+
+
+Wrt FB
+----------------------
+
+Assumes the fb device is in /dev/graphics/fb0
+
+Assumes it is 32 bit per pixel.
+
+It writes into all the screens irrespective of whether
+it is currently visible or not.
+
+
